@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="scriptinjection">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Script Injection options</title>
+  <link rel="icon" href="../static/16x16.png" mce_href="../static/16x16.png" type="image/xicon">
+  <link rel="stylesheet" href="../libs/bootstrap.min.css" />
+  <link rel="stylesheet" href="options.css" />
+  <script type="text/javascript" src="../libs/vue.js"></script>
+</head>
+
+<body >
+  <div class="container" id="app">
+    <div  class="navbar navbar-inverse navbar-fixed-top top">
+        <div class="btnBox">
+          <span class="h2">静态资源替换</span>
+          <button class="btn btn-primary fr" @click="exportBatch">导出</button>
+          <div class="file fr"><button class="btn btn-primary" >导入</button><input type="file" @change="importBatch" onclick="this.value=null;" accept="application/JSON"/> </div>
+          <button class="btn btn-primary fr" @click = "fastAdd"> + </button>
+        </div>
+    </div>
+    <div v-show="loadingDisplay" class="landing">正在加载</div>
+    <div v-show="editBoxDisplay" class="editBox">
+      <button type="button" class="close" aria-hidden="true" @click="hideEditBox">&times;</button>
+      <div class="errorMsg">{{inputError}}</div>
+      <div class="form-group">
+        <label for="url">替换地址:</label>
+        <input type="text" v-model="currentItem.regexurl" class="form-control" id="url"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="code">替换文件:</label>
+        <textarea v-model="currentItem.filecontent"
+          @drop="readFile"
+          @dragenter.prevent
+          @dragover.prevent
+          class="form-control"
+          id="code"
+          placeholder="add multiple lines">
+        </textarea>
+      </div>
+      <button class="btn-block btn btn-primary" @click="buttonClick">{{editBoxButtonType}}</button>
+    </div>
+    <div v-show="injectBoxDisplay" class="injectBox">
+    </div>
+    <table v-show="!loadingDisplay" class="table table-hover">
+      <tr v-for="(item,index) in items">
+        <td>
+          <label :title="item.description">
+            <input type="checkbox" @change="checkRule(item)" v-model="item.checked" />{{item.name}}
+          </label>
+          <button @click="editRule(item)" type="button" class="btn btn-default btn-xs edit">编辑</button>
+          <button @click="removeRule(item,index)" type="button" class="btn btn-danger btn-xs remove">删除</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <script src="../libs/FileSaver.js"></script>
+  <script src="../libs/filereader-promise.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

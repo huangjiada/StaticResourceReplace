@@ -1,0 +1,23 @@
+{
+   "background": {
+      "persistent": true,
+      "scripts": [ "extension.js","background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "static/24x24.png",
+      "default_popup": "popup/popup.html",
+      "default_title": "StaticFileReplace"
+   },
+   "description": "替换静态资源文件，将指定地址的静态资源重定向为本机或插件存储的文件，不支持ServiceWorker",
+   "icons": {
+      "16": "static/16x16.png",
+      "48": "static/48x48.png",
+      "64": "static/64x64.png"
+   },
+   "manifest_version": 2,
+   "name": "StaticFileReplace",
+   "options_page": "options/options.html",
+   "permissions": [ "tabs", "webRequest", "webRequestBlocking", "<all_urls>", "unlimitedStorage" ,"storage"],
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+   "version": "0.0.1"
+}
